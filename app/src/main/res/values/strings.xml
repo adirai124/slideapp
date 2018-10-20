@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">slideapp</string>
+    <string name="next">Next</string>
+    <string name="go_back">Go Back</string>
+    <string name="the_end">THE END!</string>
+    <string name="finish">Finish</string>
 </resources>

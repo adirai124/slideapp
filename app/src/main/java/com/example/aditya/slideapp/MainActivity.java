@@ -1,5 +1,6 @@
 package com.example.aditya.slideapp;
 
+import android.content.Intent;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,16 +16,18 @@ public class MainActivity extends AppCompatActivity {
     private SliderAdapter sliderAdapter;
     private TextView[] mDots;
     private Button mBack;
+    private Button mFinish;
     private Button mNext;
     private int mCurPage;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mslideView = (ViewPager) findViewById(R.id.slideView);
-        mDot = (LinearLayout) findViewById(R.id.dots);
-        mBack = (Button)findViewById(R.id.pre);
-        mNext = (Button)findViewById(R.id.next);
+        mslideView = findViewById(R.id.slideView);
+        mDot = findViewById(R.id.dots);
+        mBack = findViewById(R.id.pre);
+        mNext = findViewById(R.id.next);
+        mFinish = findViewById(R.id.finish);
 
         sliderAdapter = new SliderAdapter(this);
         mslideView.setAdapter(sliderAdapter);
@@ -40,6 +43,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 mslideView.setCurrentItem(mCurPage-1);
+            }
+        });
+        mFinish.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                complete();
             }
         });
 
@@ -73,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
                 mNext.setEnabled(true);
                 mBack.setEnabled(false);
                 mBack.setVisibility(View.INVISIBLE);
+                mFinish.setVisibility(View.INVISIBLE);
                 mNext.setText("Next");
                 mBack.setText("");
             } else if (i == mDots.length -1 ) {
@@ -80,12 +90,14 @@ public class MainActivity extends AppCompatActivity {
                 mBack.setEnabled(true);
                 mBack.setVisibility(View.VISIBLE);
                 mNext.setVisibility(View.INVISIBLE);
-                mNext.setText("");
+                mFinish.setVisibility(View.VISIBLE);
+                mFinish.setText("Finish");
                 mBack.setText("Back");
             }else {
                 mNext.setEnabled(true);
                 mBack.setEnabled(true);
                 mBack.setVisibility(View.VISIBLE);
+                mFinish.setVisibility(View.INVISIBLE);
                 mNext.setVisibility(View.VISIBLE);
                 mNext.setText("Next");
                 mBack.setText("Back");
@@ -97,4 +109,8 @@ public class MainActivity extends AppCompatActivity {
 
         }
     };
+    public void complete(){
+        Intent intent = new Intent(this,Main2Activity.class);
+        startActivity(intent);
+    }
 }
